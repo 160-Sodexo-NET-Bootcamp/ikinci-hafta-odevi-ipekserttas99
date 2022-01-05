@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "A2vkvnDUPRJoPdZk6j7VklNLwm4rAKj32aFSeA02bHtpzUbk7tN50deS56EoJJ/c+sUOs37eWRio00ZGTXBu1Q==",
+  "dgSpecHash": "t4/z9B+sJIxVqTfhNpblyMafeUrnI15E440AQRDYmF/bpDOkf6Sowh6JqfWU/6IpZsHPjwmY3vwjIqsS4kYUbQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Acer\\source\\repos\\TrashCollectionSystem\\TrashCollectionSystem.csproj",
+  "projectFilePath": "C:\\Users\\Acer\\source\\repos\\ikinci-hafta-odevi-ipekserttas99\\TrashCollectionSystem\\TrashCollectionSystem.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Acer\\.nuget\\packages\\dapper\\2.0.123\\dapper.2.0.123.nupkg.sha512",
     "C:\\Users\\Acer\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",

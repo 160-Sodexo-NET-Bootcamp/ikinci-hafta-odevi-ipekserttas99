@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Q3O1LfPD8kGB4WUJ6SyXLsRvSbjMSp5CUF+ZcM3jeciVj7FfA4DIlRqKk77/2F/2fSGPkm7zY+YBZEyG9Le4sw==",
+  "dgSpecHash": "rDH4l7pShBXIKBFCKpqgcBfd5Pzm77YpcbKiSKfFK1dvK1ZoJJ5dnlTZDmZWFz7UMgz5gFlOzGwBdxFjkXLw/w==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Acer\\source\\repos\\Data(Homework)\\Data(Homework).csproj",
+  "projectFilePath": "C:\\Users\\Acer\\source\\repos\\ikinci-hafta-odevi-ipekserttas99\\Data(Homework)\\Data(Homework).csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Acer\\.nuget\\packages\\dapper\\2.0.123\\dapper.2.0.123.nupkg.sha512",
     "C:\\Users\\Acer\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
