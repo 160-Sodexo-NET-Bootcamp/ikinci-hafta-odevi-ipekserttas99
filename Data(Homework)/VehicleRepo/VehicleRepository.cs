@@ -31,5 +31,6 @@ namespace Data_Homework_.VehicleRepo
                 var result = await connection.ExecuteAsync(sql, new { Id = id });
             }
         }
+
     }
 }

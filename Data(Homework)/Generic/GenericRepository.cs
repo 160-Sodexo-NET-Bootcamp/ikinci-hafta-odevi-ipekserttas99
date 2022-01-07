@@ -25,12 +25,6 @@ namespace Data_Homework_.Generic
             dbSet = _dbContext.Set<TEntity>();
         }
 
-        public async Task Create(TEntity entity)
-        {
-            
-            await dbSet.AddAsync(entity);
-            await _dbContext.SaveChangesAsync();
-        }
 
         public async Task Delete(int id)
         {
@@ -79,7 +73,7 @@ namespace Data_Homework_.Generic
 
             }
 
-            for (int i = sonEleman + 1; i < lengthoflist; i++)
+            for (int i = sonEleman + 2; i < lengthoflist; i++)
             {
 
                 list3.Add(containers[i]);

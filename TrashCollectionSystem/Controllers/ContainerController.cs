@@ -1,4 +1,6 @@
-﻿using Data_Homework_.Models;
+﻿using Data_Homework_.Context;
+using Data_Homework_.Models;
+using Data_Homework_.Operations;
 using Data_Homework_.Uow;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -7,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using static Data_Homework_.Operations.CreateContainerCommand;
 
 namespace TrashCollectionSystem.Controllers
 {
@@ -16,11 +19,12 @@ namespace TrashCollectionSystem.Controllers
     {
         private readonly IUnitOfWork unitOfWork;
         private readonly ILogger<ContainerController> _logger;
-
-        public ContainerController(ILogger<ContainerController> logger, IUnitOfWork unitOfWork)
+        private readonly TrashSystemDbContext _dbContext;
+        public ContainerController(ILogger<ContainerController> logger, IUnitOfWork unitOfWork, TrashSystemDbContext dbContext)
         {
             _logger = logger;
             this.unitOfWork = unitOfWork;
+            this._dbContext = dbContext;
         }
 
         [HttpGet]
@@ -49,16 +53,24 @@ namespace TrashCollectionSystem.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> CreateContainer([FromBody] Container container)
+        public async Task<IActionResult> CreateContainer([FromBody] CreateContainerModel createContainer)
         {
-            await unitOfWork.Container.Create(container);
-            unitOfWork.Complete();
-            CreatedAtAction("GetById", new { }, container);
+            CreateContainerCommand command = new CreateContainerCommand(_dbContext);
+            try
+            {
+                command.Model = createContainer;
+                command.Handle();
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex.Message);
+            }
             return Ok();
         }
 
         [HttpPut("{id:int}")]
-        public async Task<IActionResult> UpdateContainer(int id, [FromBody] ContainerUpdateDto updateDto)
+        public async Task<IActionResult> UpdateContainer(int id, [FromBody] ContainerUpdateModel updateDto)
         {
             var i = await unitOfWork.Container.GetById(id);
             i.ContainerName = updateDto.ContainerName;

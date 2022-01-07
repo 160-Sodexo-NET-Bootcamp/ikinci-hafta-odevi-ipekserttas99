@@ -14,7 +14,6 @@ namespace Data_Homework_.Generic
         
         Task<TEntity> GetById(int id);
         List<List<Container>> GetClusteredContainers(List<Container> containers, int N);
-        Task Create(TEntity entity);
 
         Task Update(int id, TEntity entity);
 

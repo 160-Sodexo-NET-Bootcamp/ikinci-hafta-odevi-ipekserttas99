@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Data_Homework_.Models
 {
-    public class VehicleUpdateDto
+    public class VehicleUpdateModel
     {
         public string VehicleName { get; set; }
         public string VehiclePlate { get; set; }

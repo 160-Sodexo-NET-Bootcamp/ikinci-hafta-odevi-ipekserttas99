@@ -13,12 +13,13 @@ using System.Threading.Tasks;
 
 namespace Data_Homework_.ContainerRepo
 {
-    public class ContainerRepository : GenericRepository<Container> , IContainerRepository 
+    public class ContainerRepository : GenericRepository<Container> , IContainerRepository
     {
         
         public ContainerRepository(TrashSystemDbContext dbContext, ILogger logger) : base(dbContext, logger)
         {
             
         }
+
     }
 }
