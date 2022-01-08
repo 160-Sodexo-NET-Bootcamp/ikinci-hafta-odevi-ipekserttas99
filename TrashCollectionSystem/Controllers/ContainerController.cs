@@ -55,9 +55,10 @@ namespace TrashCollectionSystem.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateContainer([FromBody] CreateContainerModel createContainer)
         {
-            CreateContainerCommand command = new CreateContainerCommand(_dbContext);
+            
             try
             {
+                CreateContainerCommand command = new CreateContainerCommand(_dbContext);
                 command.Model = createContainer;
                 command.Handle();
             }
