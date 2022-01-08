@@ -56,7 +56,7 @@ namespace TrashCollectionSystem.Controllers
         }
 
         [HttpPut("{id:int}")]
-        public async Task<IActionResult> UpdateVehicle(int id,[FromBody] VehicleUpdateModel updateDto)
+        public async Task<IActionResult> UpdateVehicle(int id,[FromBody] VehicleUpdateDto updateDto)
         {
             var i = await unitOfWork.Vehicle.GetById(id);
             i.VehicleName = updateDto.VehicleName;

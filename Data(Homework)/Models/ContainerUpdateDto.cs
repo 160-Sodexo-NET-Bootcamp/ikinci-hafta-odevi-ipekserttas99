@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Data_Homework_.Models
 {
-    public class ContainerUpdateModel
+    public class ContainerUpdateDto
     {
         //public int Id { get; set; }
         public string ContainerName { get; set; }

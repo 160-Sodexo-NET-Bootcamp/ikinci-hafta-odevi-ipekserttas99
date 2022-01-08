@@ -70,7 +70,7 @@ namespace TrashCollectionSystem.Controllers
         }
 
         [HttpPut("{id:int}")]
-        public async Task<IActionResult> UpdateContainer(int id, [FromBody] ContainerUpdateModel updateDto)
+        public async Task<IActionResult> UpdateContainer(int id, [FromBody] ContainerUpdateDto updateDto)
         {
             var i = await unitOfWork.Container.GetById(id);
             i.ContainerName = updateDto.ContainerName;
