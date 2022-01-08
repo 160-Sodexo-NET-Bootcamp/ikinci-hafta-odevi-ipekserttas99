@@ -41,9 +41,10 @@ namespace TrashCollectionSystem.Controllers
         [HttpPost]
         public IActionResult CreateVehicle([FromBody] CreateVehicleModel createVehicle)
         {
-            CreateVehicleCommand command = new CreateVehicleCommand(_dbContext);
+            
             try
             {
+                CreateVehicleCommand command = new CreateVehicleCommand(_dbContext);
                 command.Model = createVehicle;
                 command.Handle();
             }
