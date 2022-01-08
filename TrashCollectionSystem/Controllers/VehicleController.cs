@@ -2,6 +2,7 @@
 using Data_Homework_.ContainerRepo;
 using Data_Homework_.Context;
 using Data_Homework_.Models;
+using Data_Homework_.Operations.UpdateCommands;
 using Data_Homework_.Uow;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -12,6 +13,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using static Data_Homework_.Models.CreateVehicleCommand;
+using static Data_Homework_.Operations.UpdateCommands.UpdateVehicleCommand;
 
 namespace TrashCollectionSystem.Controllers
 {
@@ -41,9 +43,10 @@ namespace TrashCollectionSystem.Controllers
         [HttpPost]
         public IActionResult CreateVehicle([FromBody] CreateVehicleModel createVehicle)
         {
-            CreateVehicleCommand command = new CreateVehicleCommand(_dbContext);
+            
             try
             {
+                CreateVehicleCommand command = new CreateVehicleCommand(_dbContext);
                 command.Model = createVehicle;
                 command.Handle();
             }
@@ -55,14 +58,20 @@ namespace TrashCollectionSystem.Controllers
             return Ok();
         }
 
-        [HttpPut("{id:int}")]
-        public async Task<IActionResult> UpdateVehicle(int id,[FromBody] VehicleUpdateDto updateDto)
-        {
-            var i = await unitOfWork.Vehicle.GetById(id);
-            i.VehicleName = updateDto.VehicleName;
-            i.VehiclePlate = updateDto.VehiclePlate;
-            await unitOfWork.Vehicle.Update(id, i);
-            return Ok();
+        [HttpPut("{id}")]
+        public IActionResult UpdateVehicle(int id,[FromBody] UpdateVehicleModel updatedVehicle)
+        {UpdateVehicleCommand command = new UpdateVehicleCommand(_dbContext);
+            try
+            {
+                
+                command.Model = updatedVehicle;
+                command.Handle(id, updatedVehicle);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            return Ok(updatedVehicle);
         }
 
         [HttpDelete("{id:int}")]

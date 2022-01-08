@@ -1,6 +1,7 @@
 ﻿using Data_Homework_.Context;
 using Data_Homework_.Models;
 using Data_Homework_.Operations;
+using Data_Homework_.Operations.UpdateCommands;
 using Data_Homework_.Uow;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -10,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using static Data_Homework_.Operations.CreateContainerCommand;
+using static Data_Homework_.Operations.UpdateCommands.UpdateContainerCommand;
 
 namespace TrashCollectionSystem.Controllers
 {
@@ -55,9 +57,10 @@ namespace TrashCollectionSystem.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateContainer([FromBody] CreateContainerModel createContainer)
         {
-            CreateContainerCommand command = new CreateContainerCommand(_dbContext);
+            
             try
             {
+                CreateContainerCommand command = new CreateContainerCommand(_dbContext);
                 command.Model = createContainer;
                 command.Handle();
             }
@@ -70,14 +73,20 @@ namespace TrashCollectionSystem.Controllers
         }
 
         [HttpPut("{id:int}")]
-        public async Task<IActionResult> UpdateContainer(int id, [FromBody] ContainerUpdateDto updateDto)
+        public IActionResult UpdateContainer(int id, [FromBody] UpdateContainerModel updatedContainer)
         {
-            var i = await unitOfWork.Container.GetById(id);
-            i.ContainerName = updateDto.ContainerName;
-            i.Latitude = updateDto.Latitude;
-            i.Longitude = updateDto.Longitude;
-            await unitOfWork.Container.Update(id, i);
-            return Ok();
+            UpdateContainerCommand command = new UpdateContainerCommand(_dbContext);
+            try
+            {
+                
+                command.Model = updatedContainer;
+                command.Handle(id, updatedContainer);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            return Ok(updatedContainer);
         }
 
         [HttpDelete("{id:int}")]
