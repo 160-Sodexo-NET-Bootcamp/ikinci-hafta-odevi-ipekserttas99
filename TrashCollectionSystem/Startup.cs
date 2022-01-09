@@ -1,4 +1,6 @@
+using AutoMapper;
 using Data_Homework_.Context;
+using Data_Homework_.Mapper;
 using Data_Homework_.Uow;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -13,6 +15,7 @@ using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace TrashCollectionSystem
@@ -34,8 +37,19 @@ namespace TrashCollectionSystem
             services.AddDbContext<TrashSystemDbContext>(options =>
             options.UseSqlServer("Server=IPEK; Database=trashcollectionsystem; Trusted_Connection=True;"));
 
+            
             //add uow
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+            //add automapper
+            var mappingConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new MappingProfile());
+            });
+
+            IMapper mapper = mappingConfig.CreateMapper();
+            services.AddSingleton(mapper);
+
 
             services.AddControllers();
             services.AddSwaggerGen(c =>

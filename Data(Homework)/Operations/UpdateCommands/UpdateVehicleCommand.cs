@@ -1,4 +1,5 @@
-﻿using Data_Homework_.Context;
+﻿using AutoMapper;
+using Data_Homework_.Context;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,24 +10,21 @@ namespace Data_Homework_.Operations.UpdateCommands
 {
     public class UpdateVehicleCommand
     {
-
+        private readonly IMapper _mapper;
+        public int VehicleId { get; set; }
         public UpdateVehicleModel Model { get; set; }
         private readonly TrashSystemDbContext _dbContext;
 
-        public UpdateVehicleCommand(TrashSystemDbContext dbContext)
+        public UpdateVehicleCommand(TrashSystemDbContext dbContext, IMapper mapper)
         {
             _dbContext = dbContext;
+            _mapper = mapper;
         }
 
-        public void Handle(int id, UpdateVehicleModel updateVehicleModel)
+        public void Handle(UpdateVehicleModel updateVehicleModel)
         {
-            var vehicle = _dbContext.Vehicle.SingleOrDefault(v => v.Id == id);
-            if(vehicle is null) { 
-                throw new InvalidOperationException("Araç bulunamadı!");
-             }
-            vehicle.VehicleName = updateVehicleModel.VehicleName != default ? updateVehicleModel.VehicleName : vehicle.VehicleName;
-            vehicle.VehiclePlate = updateVehicleModel.VehiclePlate != default ? updateVehicleModel.VehiclePlate : vehicle.VehiclePlate;
-
+            var vehicle = _dbContext.Vehicle.Where(vehicle => vehicle.Id == VehicleId).SingleOrDefault();
+            _mapper.Map(Model, vehicle);
             _dbContext.SaveChanges();
         }
         public class UpdateVehicleModel

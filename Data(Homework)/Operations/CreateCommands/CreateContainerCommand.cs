@@ -1,4 +1,5 @@
-﻿using Data_Homework_.Context;
+﻿using AutoMapper;
+using Data_Homework_.Context;
 using Data_Homework_.Models;
 using System;
 using System.Collections.Generic;
@@ -12,24 +13,18 @@ namespace Data_Homework_.Operations
     public class CreateContainerCommand
     {
         public CreateContainerModel Model { get; set; }
-
+        private readonly IMapper _mapper;
         private readonly TrashSystemDbContext _dbContext;
 
-        public CreateContainerCommand(TrashSystemDbContext dbContext)
+        public CreateContainerCommand(TrashSystemDbContext dbContext, IMapper mapper)
         {
             _dbContext = dbContext;
+            _mapper = mapper;
         }
         public void Handle()
         {
             var container = _dbContext.Container.SingleOrDefault(c => c.ContainerName == Model.ContainerName);
-            if (container is not null)
-                throw new InvalidOperationException("Container zaten mevcut");
-
-            container = new Container();
-            container.ContainerName = Model.ContainerName;
-            container.Latitude = Model.Latitude;
-            container.Longitude = Model.Longitude;
-            container.VehicleId = Model.VehicleId;
+            container = _mapper.Map<Container>(Model);
 
             _dbContext.Container.Add(container);
             _dbContext.SaveChanges();

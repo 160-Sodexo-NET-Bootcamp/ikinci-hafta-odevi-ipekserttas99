@@ -1,4 +1,5 @@
-﻿using Data_Homework_.Context;
+﻿using AutoMapper;
+using Data_Homework_.Context;
 using Data_Homework_.Models;
 using Data_Homework_.Operations;
 using Data_Homework_.Operations.UpdateCommands;
@@ -21,12 +22,12 @@ namespace TrashCollectionSystem.Controllers
     {
         private readonly IUnitOfWork unitOfWork;
         private readonly ILogger<ContainerController> _logger;
-        private readonly TrashSystemDbContext _dbContext;
-        public ContainerController(ILogger<ContainerController> logger, IUnitOfWork unitOfWork, TrashSystemDbContext dbContext)
+        private readonly IMapper _mapper;
+        public ContainerController(ILogger<ContainerController> logger, IUnitOfWork unitOfWork, IMapper mapper)
         {
             _logger = logger;
             this.unitOfWork = unitOfWork;
-            this._dbContext = dbContext;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -55,37 +56,16 @@ namespace TrashCollectionSystem.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> CreateContainer([FromBody] CreateContainerModel createContainer)
+        public IActionResult CreateContainer([FromBody] CreateContainerModel createContainer)
         {
-            
-            try
-            {
-                CreateContainerCommand command = new CreateContainerCommand(_dbContext);
-                command.Model = createContainer;
-                command.Handle();
-            }
-            catch (Exception ex)
-            {
-
-                return BadRequest(ex.Message);
-            }
+            unitOfWork.Container.Create(createContainer);
             return Ok();
         }
 
         [HttpPut("{id:int}")]
         public IActionResult UpdateContainer(int id, [FromBody] UpdateContainerModel updatedContainer)
         {
-            UpdateContainerCommand command = new UpdateContainerCommand(_dbContext);
-            try
-            {
-                
-                command.Model = updatedContainer;
-                command.Handle(id, updatedContainer);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            unitOfWork.Container.Update(id, updatedContainer);
             return Ok(updatedContainer);
         }
 

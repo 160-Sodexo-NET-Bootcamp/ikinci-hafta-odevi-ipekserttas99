@@ -1,4 +1,5 @@
-﻿using Dapper;
+﻿using AutoMapper;
+using Dapper;
 using Data_Homework_.ContainerRepo;
 using Data_Homework_.Context;
 using Data_Homework_.Models;
@@ -23,14 +24,13 @@ namespace TrashCollectionSystem.Controllers
     {
         private readonly IUnitOfWork unitOfWork;
         private readonly ILogger<VehicleController> _logger;
+        private readonly IMapper _mapper;
 
-        private readonly TrashSystemDbContext _dbContext;
-
-        public VehicleController(ILogger<VehicleController> logger, IUnitOfWork unitOfWork, TrashSystemDbContext dbContext)
+        public VehicleController(ILogger<VehicleController> logger, IUnitOfWork unitOfWork, IMapper mapper)
         {
             _logger = logger;
             this.unitOfWork = unitOfWork;
-            this._dbContext = dbContext;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -43,34 +43,14 @@ namespace TrashCollectionSystem.Controllers
         [HttpPost]
         public IActionResult CreateVehicle([FromBody] CreateVehicleModel createVehicle)
         {
-            
-            try
-            {
-                CreateVehicleCommand command = new CreateVehicleCommand(_dbContext);
-                command.Model = createVehicle;
-                command.Handle();
-            }
-            catch (Exception ex)
-            {
-
-                return BadRequest(ex.Message);
-            }
+            unitOfWork.Vehicle.Create(createVehicle);
             return Ok();
         }
 
         [HttpPut("{id}")]
         public IActionResult UpdateVehicle(int id,[FromBody] UpdateVehicleModel updatedVehicle)
-        {UpdateVehicleCommand command = new UpdateVehicleCommand(_dbContext);
-            try
-            {
-                
-                command.Model = updatedVehicle;
-                command.Handle(id, updatedVehicle);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+        {
+            unitOfWork.Vehicle.Update(id, updatedVehicle);
             return Ok(updatedVehicle);
         }
 

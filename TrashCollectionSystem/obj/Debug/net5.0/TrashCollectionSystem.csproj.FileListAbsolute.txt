@@ -136,3 +136,9 @@ C:\Users\Acer\source\repos\ikinci-hafta-odevi-ipekserttas99\TrashCollectionSyste
 C:\Users\Acer\source\repos\ikinci-hafta-odevi-ipekserttas99\TrashCollectionSystem\obj\Debug\net5.0\ref\TrashCollectionSystem.dll
 C:\Users\Acer\source\repos\ikinci-hafta-odevi-ipekserttas99\TrashCollectionSystem\obj\Debug\net5.0\TrashCollectionSystem.pdb
 C:\Users\Acer\source\repos\ikinci-hafta-odevi-ipekserttas99\TrashCollectionSystem\obj\Debug\net5.0\TrashCollectionSystem.genruntimeconfig.cache
+C:\Users\Acer\source\repos\ikinci-hafta-odevi-ipekserttas99\TrashCollectionSystem\bin\Debug\net5.0\AutoMapper.dll
+C:\Users\Acer\source\repos\ikinci-hafta-odevi-ipekserttas99\TrashCollectionSystem\bin\Debug\net5.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+C:\Users\Acer\source\repos\ikinci-hafta-odevi-ipekserttas99\TrashCollectionSystem\bin\Debug\net5.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\Acer\source\repos\ikinci-hafta-odevi-ipekserttas99\TrashCollectionSystem\bin\Debug\net5.0\Microsoft.Extensions.Options.dll
+C:\Users\Acer\source\repos\ikinci-hafta-odevi-ipekserttas99\TrashCollectionSystem\bin\Debug\net5.0\Microsoft.Extensions.Primitives.dll
+C:\Users\Acer\source\repos\ikinci-hafta-odevi-ipekserttas99\TrashCollectionSystem\bin\Debug\net5.0\System.Runtime.CompilerServices.Unsafe.dll

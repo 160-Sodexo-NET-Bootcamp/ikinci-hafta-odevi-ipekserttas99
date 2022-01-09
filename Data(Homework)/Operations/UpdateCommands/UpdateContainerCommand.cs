@@ -1,4 +1,6 @@
-﻿using Data_Homework_.Context;
+﻿using AutoMapper;
+using Data_Homework_.Context;
+using Data_Homework_.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -12,22 +14,18 @@ namespace Data_Homework_.Operations.UpdateCommands
     {
         public UpdateContainerModel Model { get; set; }
         private readonly TrashSystemDbContext _dbContext;
-
-        public UpdateContainerCommand(TrashSystemDbContext dbContext)
+        private readonly IMapper _mapper;
+        public int ContainerId { get; set; }
+        public UpdateContainerCommand(TrashSystemDbContext dbContext, IMapper mapper)
         {
             _dbContext = dbContext;
+            _mapper = mapper;
         }
 
-        public void Handle(int id, UpdateContainerModel updateContainerModel)
+        public void Handle(UpdateContainerModel updateContainerModel)
         {
-            var container = _dbContext.Container.SingleOrDefault(x => x.Id == id);
-            if (container is null)
-                throw new InvalidOperationException("Container bulunamadı");
-
-            container.ContainerName = updateContainerModel.ContainerName != default ? updateContainerModel.ContainerName : container.ContainerName;
-            container.Latitude = updateContainerModel.Latitude != default ? updateContainerModel.Latitude : container.Latitude;
-            container.Longitude = updateContainerModel.Longitude != default ? updateContainerModel.Longitude : container.Longitude;
-            
+            var container = _dbContext.Container.Where(container => container.Id == ContainerId).SingleOrDefault();
+            _mapper.Map(Model, container);
             _dbContext.SaveChanges();
         }
 
