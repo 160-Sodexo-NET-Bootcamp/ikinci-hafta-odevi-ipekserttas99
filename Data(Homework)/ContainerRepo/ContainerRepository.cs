@@ -3,8 +3,7 @@ using Dapper;
 using Data_Homework_.Context;
 using Data_Homework_.Generic;
 using Data_Homework_.Models;
-using Data_Homework_.Operations;
-using Data_Homework_.Operations.UpdateCommands;
+using Data_Homework_.ViewModels;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
@@ -13,7 +12,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static Data_Homework_.Operations.CreateContainerCommand;
+
 
 namespace Data_Homework_.ContainerRepo
 {
@@ -26,25 +25,23 @@ namespace Data_Homework_.ContainerRepo
             _mapper = mapper;
         }
 
-        public CreateContainerModel Create(CreateContainerCommand.CreateContainerModel createContainerModel)
+        public async Task Create(CreateContainerViewModel createContainerViewModel)
         {
             
-            CreateContainerCommand command = new CreateContainerCommand(_dbContext, _mapper);
-            command.Model = createContainerModel;
-            command.Handle();
+            var container = _dbContext.Container.SingleOrDefault(c => c.ContainerName == createContainerViewModel.ContainerName);
+            container = _mapper.Map<Container>(createContainerViewModel);
 
-            return createContainerModel;
+            _dbContext.Container.Add(container);
+            _dbContext.SaveChanges();
             
         }
 
-        public UpdateContainerCommand.UpdateContainerModel Update(int id,UpdateContainerCommand.UpdateContainerModel updateContainerModel)
+        public async Task Update(int id,UpdateContainerViewModel updateContainerModel)
         {
-            UpdateContainerCommand command = new UpdateContainerCommand(_dbContext, _mapper);
-            command.ContainerId = id;
-            command.Model = updateContainerModel;
-            command.Handle(updateContainerModel);
 
-            return updateContainerModel;
+            var container = _dbContext.Container.Where(container => container.Id == id).SingleOrDefault();
+            _mapper.Map(updateContainerModel, container);
+            _dbContext.SaveChanges();
 
 
         }

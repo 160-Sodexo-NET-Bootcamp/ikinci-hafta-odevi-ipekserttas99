@@ -1,9 +1,8 @@
 ﻿using AutoMapper;
 using Data_Homework_.Context;
 using Data_Homework_.Models;
-using Data_Homework_.Operations;
-using Data_Homework_.Operations.UpdateCommands;
 using Data_Homework_.Uow;
+using Data_Homework_.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -11,8 +10,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using static Data_Homework_.Operations.CreateContainerCommand;
-using static Data_Homework_.Operations.UpdateCommands.UpdateContainerCommand;
 
 namespace TrashCollectionSystem.Controllers
 {
@@ -56,16 +53,16 @@ namespace TrashCollectionSystem.Controllers
 
 
         [HttpPost]
-        public IActionResult CreateContainer([FromBody] CreateContainerModel createContainer)
+        public async Task<IActionResult> CreateContainer([FromBody] CreateContainerViewModel createContainer)
         {
-            unitOfWork.Container.Create(createContainer);
+            await unitOfWork.Container.Create(createContainer);
             return Ok();
         }
 
         [HttpPut("{id:int}")]
-        public IActionResult UpdateContainer(int id, [FromBody] UpdateContainerModel updatedContainer)
+        public async Task<IActionResult> UpdateContainer(int id, [FromBody] UpdateContainerViewModel updatedContainer)
         {
-            unitOfWork.Container.Update(id, updatedContainer);
+            await unitOfWork.Container.Update(id, updatedContainer);
             return Ok(updatedContainer);
         }
 

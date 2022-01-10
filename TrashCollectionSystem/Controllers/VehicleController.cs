@@ -3,8 +3,8 @@ using Dapper;
 using Data_Homework_.ContainerRepo;
 using Data_Homework_.Context;
 using Data_Homework_.Models;
-using Data_Homework_.Operations.UpdateCommands;
 using Data_Homework_.Uow;
+using Data_Homework_.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -13,8 +13,6 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
-using static Data_Homework_.Models.CreateVehicleCommand;
-using static Data_Homework_.Operations.UpdateCommands.UpdateVehicleCommand;
 
 namespace TrashCollectionSystem.Controllers
 {
@@ -41,16 +39,16 @@ namespace TrashCollectionSystem.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateVehicle([FromBody] CreateVehicleModel createVehicle)
+        public async Task<IActionResult> CreateVehicle([FromBody] CreateVehicleViewModel createVehicle)
         {
-            unitOfWork.Vehicle.Create(createVehicle);
+            await unitOfWork.Vehicle.Create(createVehicle);
             return Ok();
         }
 
         [HttpPut("{id}")]
-        public IActionResult UpdateVehicle(int id,[FromBody] UpdateVehicleModel updatedVehicle)
+        public async Task<IActionResult> UpdateVehicle(int id,[FromBody] UpdateVehicleViewModel updatedVehicle)
         {
-            unitOfWork.Vehicle.Update(id, updatedVehicle);
+            await unitOfWork.Vehicle.Update(id, updatedVehicle);
             return Ok(updatedVehicle);
         }
 

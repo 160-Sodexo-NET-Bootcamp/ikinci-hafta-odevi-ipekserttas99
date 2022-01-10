@@ -3,7 +3,7 @@ using Dapper;
 using Data_Homework_.Context;
 using Data_Homework_.Generic;
 using Data_Homework_.Models;
-using Data_Homework_.Operations.UpdateCommands;
+using Data_Homework_.ViewModels;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
@@ -23,14 +23,17 @@ namespace Data_Homework_.VehicleRepo
             _mapper = mapper;
         }
 
-        public CreateVehicleCommand.CreateVehicleModel Create(CreateVehicleCommand.CreateVehicleModel createVehicleModel)
+      
+
+        public async Task Create(CreateVehicleViewModel createVehicleModel)
         {
-            
-            CreateVehicleCommand command = new CreateVehicleCommand(_dbContext, _mapper);
-            command.Model = createVehicleModel;
-            command.Handle();
-            return createVehicleModel;
-            
+            var vehicle = _dbContext.Vehicle.SingleOrDefault(v => v.VehiclePlate == createVehicleModel.VehiclePlate);
+            vehicle = _mapper.Map<Vehicle>(createVehicleModel);
+
+            _dbContext.Vehicle.Add(vehicle);
+            _dbContext.SaveChanges();
+
+
         }
 
         public async Task Delete(int id)
@@ -44,13 +47,13 @@ namespace Data_Homework_.VehicleRepo
             }
         }
 
-        public UpdateVehicleCommand.UpdateVehicleModel Update(int id, UpdateVehicleCommand.UpdateVehicleModel updateVehicleModel)
+        
+
+        public async Task Update(int id, UpdateVehicleViewModel updateVehicleModel)
         {
-            UpdateVehicleCommand command = new UpdateVehicleCommand(_dbContext, _mapper);
-            command.VehicleId = id;
-            command.Model = updateVehicleModel;
-            command.Handle(updateVehicleModel);
-            return updateVehicleModel;
+            var vehicle = _dbContext.Vehicle.Where(vehicle => vehicle.Id == id).SingleOrDefault();
+            _mapper.Map(updateVehicleModel, vehicle);
+            _dbContext.SaveChanges();
         }
     }
 }

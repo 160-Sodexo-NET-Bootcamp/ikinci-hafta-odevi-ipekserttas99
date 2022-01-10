@@ -5,14 +5,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static Data_Homework_.Operations.CreateContainerCommand;
-using static Data_Homework_.Operations.UpdateCommands.UpdateContainerCommand;
+using Data_Homework_.ViewModels;
 
 namespace Data_Homework_.ContainerRepo
 {
     public interface IContainerRepository : IGenericRepository<Container>
     {
-        CreateContainerModel Create(CreateContainerModel createContainerModel);
-        UpdateContainerModel Update(int id, UpdateContainerModel updateContainerModel);
+        Task Create(CreateContainerViewModel createContainerModel);
+        Task Update(int id, UpdateContainerViewModel updateContainerModel);
     }
 }

@@ -2,7 +2,6 @@
 using Dapper;
 using Data_Homework_.Context;
 using Data_Homework_.Models;
-using Data_Homework_.Operations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
@@ -87,16 +86,5 @@ namespace Data_Homework_.Generic
             return list;
         }
 
-        //public async Task Update(int id, TEntity entity)
-        //{
-        //    dbSet.Update(entity);
-        //    await _dbContext.SaveChangesAsync();
-        //}
-
-        //public async Task Create(TEntity entity)
-        //{
-        //    CreateContainerCommand command = new CreateContainerCommand(_dbContext, _mapper);
-
-        //}
     }
 }

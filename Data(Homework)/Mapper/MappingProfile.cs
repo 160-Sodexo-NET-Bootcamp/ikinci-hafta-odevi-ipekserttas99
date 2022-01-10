@@ -1,14 +1,11 @@
 ﻿using AutoMapper;
 using Data_Homework_.Models;
+using Data_Homework_.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static Data_Homework_.Models.CreateVehicleCommand;
-using static Data_Homework_.Operations.CreateContainerCommand;
-using static Data_Homework_.Operations.UpdateCommands.UpdateContainerCommand;
-using static Data_Homework_.Operations.UpdateCommands.UpdateVehicleCommand;
 
 namespace Data_Homework_.Mapper
 {
@@ -16,14 +13,14 @@ namespace Data_Homework_.Mapper
     {
         public MappingProfile()
         {
-            CreateMap<CreateContainerModel, Container>();
-            CreateMap<Container, CreateContainerModel>();
-            CreateMap<CreateVehicleModel, Vehicle>();
-            CreateMap<Vehicle, CreateVehicleModel>();
-            CreateMap<UpdateContainerModel, Container>();
-            CreateMap<Container, UpdateContainerModel>();
-            CreateMap<UpdateVehicleModel, Vehicle>();
-            CreateMap<Vehicle, UpdateVehicleModel>();
+            CreateMap<CreateContainerViewModel, Container>();
+            CreateMap<Container, CreateContainerViewModel>();
+            CreateMap<CreateVehicleViewModel, Vehicle>();
+            CreateMap<Vehicle, CreateVehicleViewModel>();
+            CreateMap<UpdateContainerViewModel, Container>();
+            CreateMap<Container, UpdateContainerViewModel>();
+            CreateMap<UpdateVehicleViewModel, Vehicle>();
+            CreateMap<Vehicle, UpdateVehicleViewModel>();
         }
     }
 }
